@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">BookExchange</string>
+    <string name="app_name">Размени Книга - ФИКТ</string>
+    <string name="login_title">Добредојдовте во Размени Книга</string>
+    <string name="login_email">Најави се со Е-мејл</string>
+    <string name="login_google">Најави се со Google</string>
+    <string name="login_facebook">Најави се со Facebook</string>
+    <string name="login_anonymous">Продолжи како Гостин</string>
+    <string name="email_hint">Е-мејл адреса</string>
+    <string name="password_hint">Лозинка</string>
+    <string name="btn_login">Најава</string>
+    <string name="btn_register">Регистрација</string>
+    <string name="error_fields">Ве молиме пополнете ги сите полиња</string>
+    <string name="login_success">Успешна најава!</string>
+    <string name="login_failed">Неуспешна најава. Обидете се повторно.</string>
 </resources>
