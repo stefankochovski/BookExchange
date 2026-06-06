@@ -5,11 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.bookexchange"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36 // Стандардизирана верзија за компатибилност
 
     defaultConfig {
         applicationId = "com.example.bookexchange"
@@ -23,9 +19,8 @@ android {
 
     buildTypes {
         release {
-            optimization {
-                enable = false
-            }
+            isMinifyEnabled = false // Стандардна чиста команда за исклучување оптимизација
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -35,16 +30,24 @@ android {
 }
 
 dependencies {
+    // Твоите стандардни Android библиотеки
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+
+    // Библиотеки за логирање со Google
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
     implementation(libs.googleid)
     implementation(libs.material)
+
+    // БИБЛИОТЕКИТЕ ЗА FIREBASE (Чисти и точни)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore) // Еве ја базата, без грешки со две точки!
+    implementation("com.google.android.material:material:1.12.0")
+
+    // Тестирање
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

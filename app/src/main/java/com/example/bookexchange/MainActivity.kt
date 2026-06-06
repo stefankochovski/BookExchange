@@ -88,8 +88,11 @@ class MainActivity : AppCompatActivity() {
 
     // Функција која нè префрла на главниот екран (Dashboard) по успешна најава
     private fun startDashboard() {
-        // За почеток, бидејќи го немаме креирано вториот екран, само ќе ја рестартираме активностa или ќе ја оставиме празна.
-        // Утре тука ќе го ставиме кодот за отворање на главната социјална мрежа!
-        Toast.makeText(this, "Успешно поврзано со Firebase!", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Добредојдовте во Каталогот!", Toast.LENGTH_SHORT).show()
+
+        // ПРОМЕНА ТУКА: Наместо DashboardActivity, го носиме на BookFeedActivity (новиот екран)
+        val intent = Intent(this, BookFeedActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
