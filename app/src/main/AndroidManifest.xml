@@ -27,6 +27,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".BookFeedActivity" android:exported="false" />
         <activity android:name=".BookDetailActivity" android:exported="false" />
+        <activity android:name=".FavoritesActivity" />
+        <activity android:name=".ProfileActivity" />
     </application>
 
 </manifest>

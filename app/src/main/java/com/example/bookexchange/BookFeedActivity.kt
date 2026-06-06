@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth // Додадено за автентикација
 import com.google.firebase.firestore.FirebaseFirestore
 
 class BookFeedActivity : AppCompatActivity() {
@@ -24,6 +25,7 @@ class BookFeedActivity : AppCompatActivity() {
     private lateinit var bottomNavigation: BottomNavigationView
 
     private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance() // Иницијализација на Auth
     private val bookList = mutableListOf<Book>()
     private val filteredList = mutableListOf<Book>()
     private lateinit var adapter: BookAdapter
@@ -77,11 +79,12 @@ class BookFeedActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_favorites -> {
-                    Toast.makeText(this, "Омилени (Наскоро: логика за приказ)", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, FavoritesActivity::class.java))
                     true
                 }
                 R.id.nav_profile -> {
-                    Toast.makeText(this, "Профил (Наскоро: кориснички профил)", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ProfileActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 else -> false
@@ -92,7 +95,11 @@ class BookFeedActivity : AppCompatActivity() {
     }
 
     private fun fetchBooksFromFirebase() {
+        val currentUserId = auth.currentUser?.uid
+
+        // Филтрираме во самата заявка кон Firestore
         db.collection("books")
+            .whereNotEqualTo("ownerId", currentUserId) // Прикажи само туѓи книги
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Toast.makeText(this, "Грешка при вчитување: ${error.message}", Toast.LENGTH_SHORT).show()
@@ -104,7 +111,6 @@ class BookFeedActivity : AppCompatActivity() {
                     for (doc in value.documents) {
                         val book = doc.toObject(Book::class.java)
                         if (book != null) {
-                            // Автоматски го доделуваме ID-то од документот на книгата
                             book.id = doc.id
                             bookList.add(book)
                         }
@@ -139,44 +145,5 @@ class BookFeedActivity : AppCompatActivity() {
             }
         }
         adapter.notifyDataSetChanged()
-    }
-
-    inner class BookAdapter(private val books: List<Book>) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
-
-        inner class BookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val tvTitle: TextView = view.findViewById(R.id.tvBookTitle)
-            val tvAuthor: TextView = view.findViewById(R.id.tvBookAuthor)
-            var tvCondition: TextView = view.findViewById(R.id.tvBookCondition)
-            val ivImage: ImageView = view.findViewById(R.id.ivBookImage)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
-            return BookViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-            val book = books[position]
-            holder.tvTitle.text = book.title
-            holder.tvAuthor.text = book.author
-            holder.tvCondition.text = "Состојба: ${book.condition}"
-            holder.ivImage.setImageResource(android.R.drawable.ic_menu_gallery)
-
-            holder.itemView.setOnClickListener {
-                val context = holder.itemView.context
-                val intent = Intent(context, BookDetailActivity::class.java)
-
-                intent.putExtra("BOOK_TITLE", book.title)
-                intent.putExtra("BOOK_AUTHOR", book.author)
-                intent.putExtra("BOOK_PUBLISHER", book.publisher)
-                intent.putExtra("BOOK_CONDITION", book.condition)
-                intent.putExtra("BOOK_CITY", book.city)
-                intent.putExtra("BOOK_CONTACT", book.contact)
-
-                context.startActivity(intent)
-            }
-        }
-
-        override fun getItemCount(): Int = books.size
     }
 }

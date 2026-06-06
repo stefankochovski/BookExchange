@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 
 class BookDetailActivity : AppCompatActivity() {
 
@@ -19,13 +20,12 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var btnAddToFavorites: Button
     private lateinit var btnSendOffer: Button
 
+    // Додадено за Firebase
+    private val db = FirebaseFirestore.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
-
-        // Стрелка за назад
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Детали за книгата"
 
         // Иницијализација на компонентите
         ivBookImage = findViewById(R.id.ivDetailBookImage)
@@ -38,20 +38,21 @@ class BookDetailActivity : AppCompatActivity() {
         btnAddToFavorites = findViewById(R.id.btnAddToFavorites)
         btnSendOffer = findViewById(R.id.btnSendOffer)
 
-        // ПРЕЗЕМАЊЕ НА ПОДАТОЦИТЕ пратени од претходниот екран (Каталогот)
+        // ПРЕЗЕМАЊЕ НА ПОДАТОЦИТЕ пратени од претходниот екран
+        val bookId = intent.getStringExtra("BOOK_ID") // Ова ни треба за базата!
         val title = intent.getStringExtra("BOOK_TITLE") ?: "Непознат наслов"
         val author = intent.getStringExtra("BOOK_AUTHOR") ?: "Непознат автор"
         val publisher = intent.getStringExtra("BOOK_PUBLISHER") ?: "/"
         val condition = intent.getStringExtra("BOOK_CONDITION") ?: "Нова"
         val city = intent.getStringExtra("BOOK_CITY") ?: "/"
         val contact = intent.getStringExtra("BOOK_CONTACT") ?: "/"
-        // Стави го ова некаде при крајот на onCreate функцијата во BookDetailActivity.kt
+
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbarDetail)
         toolbar.setNavigationOnClickListener {
-            finish() // Го затвора екранот и се враќа назад на клик на стрелката
+            finish()
         }
 
-        // Поставување на податоците во текстуалните полиња
+        // Поставување на податоците
         tvTitle.text = title
         tvAuthor.text = "Автор: $author"
         tvPublisher.text = "Издавач: $publisher"
@@ -59,24 +60,25 @@ class BookDetailActivity : AppCompatActivity() {
         tvCity.text = "Град: $city"
         tvContact.text = "Контакт: $contact"
 
-        // Забелешка за сликата: Ако користиш Firebase Storage за слики, овде се користи библиотека како Glide.
-        // За почеток, ја оставаме стандардната икона додека не го поврзеш делот со слики.
-
-        // Копче 1: Зачувај во омилени
+        // Копче 1: Зачувај во омилени (Логика за Firestore)
         btnAddToFavorites.setOnClickListener {
-            // Овде понатаму ќе додадеме логика за локална база (Room) или Firestore "favorites"
-            Toast.makeText(this, "Книгата е додадена во твоите Омилени!", Toast.LENGTH_SHORT).show()
+            if (bookId != null) {
+                db.collection("books").document(bookId)
+                    .update("isFavorite", true)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Книгата е додадена во твоите Омилени!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Грешка: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, "Грешка: Непознат ID на книга!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Копче 2: Испрати понуда
         btnSendOffer.setOnClickListener {
-            // Овде понатаму може да отвориме чат или форма за порака
             Toast.makeText(this, "Понудата за размена е успешно испратена до $contact!", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish() // Го враќа корисникот назад во каталогот
-        return true
     }
 }

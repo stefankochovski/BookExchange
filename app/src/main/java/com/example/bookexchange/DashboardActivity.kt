@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -130,6 +131,7 @@ class DashboardActivity : AppCompatActivity() {
                 "author" to author,
                 "publisher" to publisher,
                 "condition" to selectedCondition,
+                "ownerId" to FirebaseAuth.getInstance().currentUser?.uid, // ДОДАЈ ГО ОВА
                 "city" to city,
                 "contact" to contact,
                 "timestamp" to com.google.firebase.Timestamp.now()

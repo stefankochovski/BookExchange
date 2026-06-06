@@ -10,6 +10,7 @@ data class Book(
     var city: String = "",
     var contact: String = "",
     var imageUrl: String = "",
+    var isFavorite: Boolean = false, // ОВА Е КЛУЧНО!,
 
     // Овие две полиња ги барат Firebase според твојот лог!
     var publisher: String = "",
