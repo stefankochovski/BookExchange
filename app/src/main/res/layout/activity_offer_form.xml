@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/ivOfferedBook"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_menu_camera"
+        android:background="#E0E0E0" />
+
+    <Button
+        android:id="@+id/btnSelectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Избери слика" />
+
+    <EditText
+        android:id="@+id/etOfferName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Твоето име" />
+
+    <EditText
+        android:id="@+id/etOfferCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Град" />
+
+    <EditText
+        android:id="@+id/etOfferCondition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Состојба на книгата" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/btnCancelOffer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Откажи" />
+
+        <Button
+            android:id="@+id/btnSendOffer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Испрати понуда" />
+
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сликај" />
+    </LinearLayout>
+</LinearLayout>

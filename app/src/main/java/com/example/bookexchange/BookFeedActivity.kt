@@ -87,6 +87,10 @@ class BookFeedActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.nav_notifications -> {
+                    startActivity(Intent(this, NotificationsActivity::class.java))
+                    true
+                }
                 else -> false
             }
         }

@@ -1,5 +1,6 @@
 package com.example.bookexchange
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -20,7 +21,6 @@ class BookDetailActivity : AppCompatActivity() {
     private lateinit var btnAddToFavorites: Button
     private lateinit var btnSendOffer: Button
 
-    // Додадено за Firebase
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,8 @@ class BookDetailActivity : AppCompatActivity() {
         btnSendOffer = findViewById(R.id.btnSendOffer)
 
         // ПРЕЗЕМАЊЕ НА ПОДАТОЦИТЕ пратени од претходниот екран
-        val bookId = intent.getStringExtra("BOOK_ID") // Ова ни треба за базата!
+        val bookId = intent.getStringExtra("BOOK_ID")
+        val ownerId = intent.getStringExtra("OWNER_ID") // Ова мора да се прати од BookFeedActivity!
         val title = intent.getStringExtra("BOOK_TITLE") ?: "Непознат наслов"
         val author = intent.getStringExtra("BOOK_AUTHOR") ?: "Непознат автор"
         val publisher = intent.getStringExtra("BOOK_PUBLISHER") ?: "/"
@@ -60,7 +61,7 @@ class BookDetailActivity : AppCompatActivity() {
         tvCity.text = "Град: $city"
         tvContact.text = "Контакт: $contact"
 
-        // Копче 1: Зачувај во омилени (Логика за Firestore)
+        // Копче 1: Зачувај во омилени
         btnAddToFavorites.setOnClickListener {
             if (bookId != null) {
                 db.collection("books").document(bookId)
@@ -71,14 +72,15 @@ class BookDetailActivity : AppCompatActivity() {
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Грешка: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
-            } else {
-                Toast.makeText(this, "Грешка: Непознат ID на книга!", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Копче 2: Испрати понуда
+        // Копче 2: Испрати понуда (Отвора нов екран)
         btnSendOffer.setOnClickListener {
-            Toast.makeText(this, "Понудата за размена е успешно испратена до $contact!", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, OfferFormActivity::class.java)
+            intent.putExtra("bookWantedId", bookId)
+            intent.putExtra("receiverId", ownerId)
+            startActivity(intent)
         }
     }
 }

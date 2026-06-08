@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore) // Еве ја базата, без грешки со две точки!
     implementation("com.google.android.material:material:1.12.0")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
 
     // Тестирање
     testImplementation(libs.junit)

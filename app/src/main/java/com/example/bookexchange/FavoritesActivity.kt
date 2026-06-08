@@ -38,8 +38,17 @@ class FavoritesActivity : AppCompatActivity() {
                     finish()
                     true
                 }
-                R.id.nav_favorites -> true
-                R.id.nav_profile -> true
+                R.id.nav_favorites -> true // Веќе сме тука
+                R.id.nav_notifications -> {
+                    startActivity(Intent(this, NotificationsActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    finish()
+                    true
+                }
                 else -> false
             }
         }
