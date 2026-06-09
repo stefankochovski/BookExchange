@@ -1,121 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/layout/activity_offer_form.xml -->
+<!-- res/layout/activity_signup.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg_ink">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        style="@style/Widget.BookSwap.Toolbar"
+    <!-- ── HERO ── -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:title="Испрати понуда"
-        app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/bg_navy"
+        android:paddingVertical="32dp">
 
+        <LinearLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:background="@drawable/bg_app_icon"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📚"
+                android:textSize="32sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Креирај профил"
+            android:textColor="@color/text_primary"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="НОВА СМЕТКА"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:letterSpacing="0.15" />
+
+    </LinearLayout>
+
+    <!-- ── ФОРМА ── -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@color/bg_ink"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="24dp">
 
-            <!-- Слика на книгата за размена -->
+            <!-- E-пошта -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="СЛИКА НА ТВОЈАТА КНИГА"
-                android:textSize="10sp"
-                android:textColor="@color/text_secondary"
-                android:letterSpacing="0.12"
-                android:layout_marginBottom="10dp" />
-
-            <!-- Preview слика + Upload зона -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/bg_image_upload"
-                android:layout_marginBottom="8dp">
-
-                <ImageView
-                    android:id="@+id/ivOfferedBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@android:drawable/ic_menu_camera"
-                    android:contentDescription="Слика на книга" />
-
-                <!-- Overlay hint ако нема слика -->
-                <LinearLayout
-                    android:id="@+id/uploadHint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="📷"
-                        android:textSize="32sp"
-                        android:layout_marginBottom="6dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Додај слика"
-                        android:textSize="13sp"
-                        android:textColor="@color/text_secondary" />
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <!-- Копчиња за слика -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginBottom="20dp">
-
-                <Button
-                    android:id="@+id/btnCamera"
-                    style="@style/Widget.BookSwap.Button.Secondary"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="6dp"
-                    android:text="@string/take_picture"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/btnSelectImage"
-                    style="@style/Widget.BookSwap.Button.Secondary"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="6dp"
-                    android:text="@string/choose_picture"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <!-- Разделник -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/border"
-                android:layout_marginBottom="20dp" />
-
-            <!-- Твое име -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Твое име"
+                android:text="Е-пошта"
                 android:textSize="11sp"
                 android:textColor="@color/text_secondary"
                 android:letterSpacing="0.08"
@@ -132,28 +83,28 @@
                 <TextView
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:text="👤"
+                    android:text="✉"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary"
                     android:gravity="center"
                     android:layout_marginEnd="10dp" />
                 <EditText
-                    android:id="@+id/etOfferName"
+                    android:id="@+id/etRegisterEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="@string/your_name"
-                    android:inputType="textPersonName"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_hint"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Град -->
+            <!-- Телефон -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Град"
+                android:text="Телефон"
                 android:textSize="11sp"
                 android:textColor="@color/text_secondary"
                 android:letterSpacing="0.08"
@@ -170,28 +121,28 @@
                 <TextView
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:text="📍"
+                    android:text="📞"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary"
                     android:gravity="center"
                     android:layout_marginEnd="10dp" />
                 <EditText
-                    android:id="@+id/etOfferCity"
+                    android:id="@+id/etRegisterPhone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="@string/city"
-                    android:inputType="textCapWords"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_hint"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Состојба -->
+            <!-- Лозинка -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Состојба на книгата"
+                android:text="Лозинка"
                 android:textSize="11sp"
                 android:textColor="@color/text_secondary"
                 android:letterSpacing="0.08"
@@ -204,44 +155,82 @@
                 android:background="@drawable/bg_input_focused"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="14dp"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="14dp">
                 <TextView
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:text="⭐"
+                    android:text="🔒"
                     android:textSize="14sp"
                     android:textColor="@color/text_secondary"
                     android:gravity="center"
                     android:layout_marginEnd="10dp" />
                 <EditText
-                    android:id="@+id/etOfferCondition"
+                    android:id="@+id/etRegisterPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="@string/book_condition"
-                    android:inputType="text"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_hint"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- Испрати -->
+            <!-- Потврди лозинка -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Потврди лозинка"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="24dp">
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="🔒"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp" />
+                <EditText
+                    android:id="@+id/etRegisterPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/confirm_password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Регистрирај копче -->
             <Button
-                android:id="@+id/btnSendOffer"
+                android:id="@+id/btnRegister"
                 style="@style/Widget.BookSwap.Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:text="@string/send_offer"
+                android:text="@string/signUp"
                 android:textSize="15sp"
                 android:layout_marginBottom="10dp" />
 
-            <!-- Откажи -->
+            <!-- Назад кон најава -->
             <Button
-                android:id="@+id/btnCancelOffer"
+                android:id="@+id/btnBackToLogin"
                 style="@style/Widget.BookSwap.Button.Secondary"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Откажи"
+                android:text="@string/backTo_login"
                 android:textSize="14sp" />
 
         </LinearLayout>

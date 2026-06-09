@@ -27,11 +27,14 @@ class NotificationsActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_notifications)
 
-        // Иницијализација на UI
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        // ✅ ПОПРАВЕНО: findViewById се повикува откако setContentView е веќе извршен
+        val mainView = findViewById<android.view.View>(R.id.main)
+        if (mainView != null) {
+            ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
+                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                insets
+            }
         }
 
         rvNotifications = findViewById(R.id.rvNotifications)
@@ -64,7 +67,7 @@ class NotificationsActivity : AppCompatActivity() {
         }
 
         // Иницијализација на адаптерот
-        adapter = NotificationAdapter(offers, { accept(it) }, { reject(it) })
+        adapter = NotificationAdapter(offers)
         rvNotifications.adapter = adapter
 
         loadNotifications()
@@ -75,7 +78,6 @@ class NotificationsActivity : AppCompatActivity() {
 
         db.collection("trades")
             .whereEqualTo("receiverId", currentUserId)
-            .whereEqualTo("status", "pending")
             .addSnapshotListener { snapshot, e ->
                 if (e != null) return@addSnapshotListener
 
@@ -93,14 +95,14 @@ class NotificationsActivity : AppCompatActivity() {
     private fun accept(offer: TradeOffer) {
         db.collection("trades").document(offer.id).update("status", "accepted")
             .addOnSuccessListener {
-                Toast.makeText(this, "Размената е прифатена!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.accepted_offer), Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun reject(offer: TradeOffer) {
         db.collection("trades").document(offer.id).update("status", "rejected")
             .addOnSuccessListener {
-                Toast.makeText(this, "Размената е одбиена.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.denied_offer), Toast.LENGTH_SHORT).show()
             }
     }
 }

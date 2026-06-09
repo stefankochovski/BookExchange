@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
 
         // 1. Кориснички податоци
         val tvEmail = findViewById<TextView>(R.id.tvProfileEmail)
-        tvEmail.text = auth.currentUser?.email ?: "Ненајавен"
+        tvEmail.text = auth.currentUser?.email ?: getString(R.string.not_logged)
 
         // 2. Иницијализација на RecyclerView
         recyclerView = findViewById(R.id.rvMyBooks)
@@ -72,7 +72,8 @@ class ProfileActivity : AppCompatActivity() {
                 recyclerView.adapter = bookAdapter
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Грешка при вчитување: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.error_loading, e.message), Toast.LENGTH_SHORT).show()
             }
     }
 }

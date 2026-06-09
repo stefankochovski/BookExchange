@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/color/nav_icon_color.xml  ← ВАЖНО: оди во res/color/, не drawable! -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="@color/gold" />
+    <item android:color="@color/text_secondary" />
+</selector>

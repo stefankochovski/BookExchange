@@ -1,61 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_notification.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="5dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/bg_card">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/tvOfferBookName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Понуда за: Наслов на книга"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/tvOfferedBookData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Сака да ја замени својата книга со вашата."
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="#666666" />
+        android:foreground="@drawable/bg_card_stroke">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp"
-            android:gravity="end">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <Button
-                android:id="@+id/btnReject"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
+            <!-- Наслов на книгата -->
+            <TextView
+                android:id="@+id/tvOfferBookName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Одбиј"
-                android:textColor="#F44336" />
+                android:text="@string/title_book"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="4dp" />
 
-            <Button
-                android:id="@+id/btnAccept"
-                android:layout_width="wrap_content"
+            <!-- Книга за размена -->
+            <TextView
+                android:id="@+id/tvOfferedBookData"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Прифати"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF" />
+                android:text="@string/trade_book"
+                android:textSize="13sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="12dp" />
 
+            <!-- Слика на понудената книга -->
+            <ImageView
+                android:id="@+id/ivNotificationBookImage"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                android:background="@color/bg_elevated"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Разделник -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/border"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Акции -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/btnReject"
+                    style="@style/Widget.BookSwap.Button.Danger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Одбиј"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnAccept"
+                    style="@style/Widget.BookSwap.Button.Primary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="Прифати"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
+
 </androidx.cardview.widget.CardView>

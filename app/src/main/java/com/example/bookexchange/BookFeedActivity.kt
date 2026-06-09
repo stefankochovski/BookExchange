@@ -30,11 +30,12 @@ class BookFeedActivity : AppCompatActivity() {
     private val filteredList = mutableListOf<Book>()
     private lateinit var adapter: BookAdapter
 
-    private var searchCriterion: String = "Наслов"
+    private var searchCriterion: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_feed)
+        searchCriterion = getString(R.string.tlt)
 
         rvBooksFeed = findViewById(R.id.rvBooksFeed)
         fabAddBook = findViewById(R.id.fabAddBook)
@@ -42,7 +43,8 @@ class BookFeedActivity : AppCompatActivity() {
         spinnerFilterCriterion = findViewById(R.id.spinnerFilterCriterion)
         bottomNavigation = findViewById(R.id.bottomNavigation)
 
-        val criteria = arrayOf("Наслов", "Автор", "Состојба", "Град")
+        val criteria = arrayOf(getString(R.string.ttl), getString(R.string.athr),
+            getString(R.string.cndtion), getString(R.string.cty))
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, criteria)
         spinnerFilterCriterion.adapter = spinnerAdapter
 
@@ -58,7 +60,7 @@ class BookFeedActivity : AppCompatActivity() {
         spinnerFilterCriterion.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 searchCriterion = criteria[position]
-                etSearch.hint = "Пребарај по $searchCriterion..."
+                etSearch.hint = getString(R.string.search_on, searchCriterion)
                 filterBooks(etSearch.text.toString())
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -75,7 +77,7 @@ class BookFeedActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_catalog -> {
-                    Toast.makeText(this, "Веќе сте во Каталогот", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.cathalouge), Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_favorites -> {
@@ -106,7 +108,8 @@ class BookFeedActivity : AppCompatActivity() {
             .whereNotEqualTo("ownerId", currentUserId) // Прикажи само туѓи книги
             .addSnapshotListener { value, error ->
                 if (error != null) {
-                    Toast.makeText(this, "Грешка при вчитување: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        getString(R.string.loading_error, error.message), Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
@@ -136,10 +139,10 @@ class BookFeedActivity : AppCompatActivity() {
             val lowerCaseQuery = query.lowercase().trim()
             for (book in bookList) {
                 val matches = when (searchCriterion) {
-                    "Наслов" -> book.title.lowercase().contains(lowerCaseQuery)
-                    "Автор" -> book.author.lowercase().contains(lowerCaseQuery)
-                    "Состојба" -> book.condition.lowercase().contains(lowerCaseQuery)
-                    "Град" -> book.city.lowercase().contains(lowerCaseQuery)
+                    getString(R.string.titl) -> book.title.lowercase().contains(lowerCaseQuery)
+                    getString(R.string.authr) -> book.author.lowercase().contains(lowerCaseQuery)
+                    getString(R.string.condtn) -> book.condition.lowercase().contains(lowerCaseQuery)
+                    getString(R.string.cityy) -> book.city.lowercase().contains(lowerCaseQuery)
                     else -> false
                 }
 

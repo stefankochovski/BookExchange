@@ -1,75 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/item_book.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="5dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/bg_card">
 
-    <LinearLayout
+    <!-- Рамка-граница преку foreground -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <ImageView
-            android:id="@+id/ivBookImage"
-            android:layout_width="80dp"
-            android:layout_height="110dp"
-            android:scaleType="centerCrop"
-            android:background="#CCCCCC"
-            android:contentDescription="Слика од книга" />
+        android:foreground="@drawable/bg_card_stroke">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvBookTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Наслов на Книга"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#212529" />
+            <!-- Потписниот РБЕТ — златна вертикална лента -->
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@color/gold" />
 
-            <TextView
-                android:id="@+id/tvBookAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Автор"
-                android:textSize="14sp"
-                android:textColor="#6C757D"
-                android:layout_marginTop="4dp" />
+            <!-- Слика на книга -->
+            <ImageView
+                android:id="@+id/ivBookImage"
+                android:layout_width="72dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:background="@color/bg_elevated"
+                android:contentDescription="@string/book_image" />
 
-            <TextView
-                android:id="@+id/tvBookCondition"
-                android:layout_width="wrap_content"
+            <!-- Информации -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Состојба: Одлична"
-                android:textSize="12sp"
-                android:textColor="#28A745"
-                android:layout_marginTop="8dp"
-                android:background="#E8F5E9"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="2dp" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvBookTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/tvBookAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/book_author"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="10dp" />
+
+                <!-- Badges -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvBookCondition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/condition_exelent"
+                        android:textSize="10sp"
+                        android:textColor="@color/teal"
+                        android:background="@drawable/bg_badge_teal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:id="@+id/tvBookCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Скопје"
+                        android:textSize="10sp"
+                        android:textColor="@color/gold"
+                        android:background="@drawable/bg_badge_gold"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="3dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Копче за омилено -->
+            <LinearLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_icon_btn"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageButton
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_heart"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/delete_favorites" />
+
+            </LinearLayout>
+
+            <!-- Копче за бришење (видливо само во Омилени) -->
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/delete_favorites"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:tint="@color/danger" />
+
         </LinearLayout>
+    </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/btnDelete"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_delete"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Избриши од омилени"
-            android:visibility="gone"
-            android:layout_gravity="center_vertical" />
-
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

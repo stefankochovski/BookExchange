@@ -13,36 +13,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookExchange">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+        <activity android:name=".MainActivity" android:exported="true" android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".DashboardActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".BookFeedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BookDetailActivity"
-            android:exported="false" />
+        <activity android:name=".DashboardActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".BookFeedActivity" android:exported="false" />
+        <activity android:name=".BookDetailActivity" android:exported="false" />
         <activity android:name=".FavoritesActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity
-            android:name=".OfferFormActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".NotificationsActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-    </application>
+        <activity android:name=".OfferFormActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".NotificationsActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".TradeOfferDetailActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".SignUpActivity" android:exported="false" android:windowSoftInputMode="adjustResize" />
 
+        <!-- MyFirebaseMessagingService само како service, НЕ activity -->
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
 </manifest>

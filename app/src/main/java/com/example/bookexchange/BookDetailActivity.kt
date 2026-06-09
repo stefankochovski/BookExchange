@@ -41,10 +41,10 @@ class BookDetailActivity : AppCompatActivity() {
         // ПРЕЗЕМАЊЕ НА ПОДАТОЦИТЕ пратени од претходниот екран
         val bookId = intent.getStringExtra("BOOK_ID")
         val ownerId = intent.getStringExtra("OWNER_ID") // Ова мора да се прати од BookFeedActivity!
-        val title = intent.getStringExtra("BOOK_TITLE") ?: "Непознат наслов"
-        val author = intent.getStringExtra("BOOK_AUTHOR") ?: "Непознат автор"
+        val title = intent.getStringExtra("BOOK_TITLE") ?: getString(R.string.unknown_t)
+        val author = intent.getStringExtra("BOOK_AUTHOR") ?: getString(R.string.unknown_a)
         val publisher = intent.getStringExtra("BOOK_PUBLISHER") ?: "/"
-        val condition = intent.getStringExtra("BOOK_CONDITION") ?: "Нова"
+        val condition = intent.getStringExtra("BOOK_CONDITION") ?: getString(R.string.nnn)
         val city = intent.getStringExtra("BOOK_CITY") ?: "/"
         val contact = intent.getStringExtra("BOOK_CONTACT") ?: "/"
 
@@ -55,11 +55,11 @@ class BookDetailActivity : AppCompatActivity() {
 
         // Поставување на податоците
         tvTitle.text = title
-        tvAuthor.text = "Автор: $author"
-        tvPublisher.text = "Издавач: $publisher"
-        tvCondition.text = "Состојба: $condition"
-        tvCity.text = "Град: $city"
-        tvContact.text = "Контакт: $contact"
+        tvAuthor.text = getString(R.string.athor, author)
+        tvPublisher.text = getString(R.string.pblshr, publisher)
+        tvCondition.text = getString(R.string.cndtn, condition)
+        tvCity.text = getString(R.string.twn, city)
+        tvContact.text = getString(R.string.cnct, contact)
 
         // Копче 1: Зачувај во омилени
         btnAddToFavorites.setOnClickListener {
@@ -67,7 +67,7 @@ class BookDetailActivity : AppCompatActivity() {
                 db.collection("books").document(bookId)
                     .update("isFavorite", true)
                     .addOnSuccessListener {
-                        Toast.makeText(this, "Книгата е додадена во твоите Омилени!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.book_in_fav), Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(this, "Грешка: ${e.message}", Toast.LENGTH_SHORT).show()

@@ -11,6 +11,7 @@ data class Book(
     var contact: String = "",
     var imageUrl: String = "",
     var isFavorite: Boolean = false, // ОВА Е КЛУЧНО!,
+    var ownerId: String = "", // Додај го ова поле!
 
     // Овие две полиња ги барат Firebase според твојот лог!
     var publisher: String = "",

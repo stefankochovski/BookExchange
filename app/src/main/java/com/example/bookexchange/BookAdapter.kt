@@ -53,8 +53,13 @@ class BookAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, BookDetailActivity::class.java)
             intent.putExtra("BOOK_ID", book.id)
+            intent.putExtra("OWNER_ID", book.ownerId) // ✅ Додади го ова
             intent.putExtra("BOOK_TITLE", book.title)
             intent.putExtra("BOOK_AUTHOR", book.author)
+            intent.putExtra("BOOK_PUBLISHER", book.publisher)
+            intent.putExtra("BOOK_CONDITION", book.condition)
+            intent.putExtra("BOOK_CITY", book.city)
+            intent.putExtra("BOOK_CONTACT", book.contact)
             holder.itemView.context.startActivity(intent)
         }
     }

@@ -1,152 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- res/layout/activity_dashboard.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F9"
-    tools:context=".DashboardActivity">
+    android:orientation="vertical"
+    android:background="@color/bg_ink">
 
-    <LinearLayout
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        style="@style/Widget.BookSwap.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="?attr/actionBarSize"
+        android:title="@string/add_book_trade" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Додај Книга за Размена"
-            android:textColor="#2E7D32"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal"/>
-
-        <EditText
-            android:id="@+id/etBookTitle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Наслов на книгата"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <EditText
-            android:id="@+id/etBookAuthor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Автор"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <EditText
-            android:id="@+id/etBookPublisher"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Издавачка куќа"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <EditText
-            android:id="@+id/etBookCity"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Внесете град (на пр. Скопје, Битола...)"
-            android:inputType="textCapWords"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <EditText
-            android:id="@+id/etBookContact"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/editbox_background"
-            android:hint="Вашето име или телефон за контакт"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Состојба на книгата:"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerCondition"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"
-            android:layout_marginBottom="24dp"/>
-
-        <ImageView
-            android:id="@+id/ivBookPreview"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginBottom="24dp">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <Button
-                android:id="@+id/btnCamera"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="4dp"
-                android:backgroundTint="#1976D2"
-                android:text="Сликај со Камера"
-                android:textColor="#FFFFFF"/>
+            <!-- Поле-хелпер макро — сите EditText-ови се обвиткани во LinearLayout со bg_input_focused -->
 
-            <Button
-                android:id="@+id/btnGallery"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="4dp"
-                android:backgroundTint="#0288D1"
-                android:text="Од Галерија"
-                android:textColor="#FFFFFF"/>
+                android:text="Наслов"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="14dp">
+                <EditText
+                    android:id="@+id/etBookTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="Наслов на книгата"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Автор"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="14dp">
+                <EditText
+                    android:id="@+id/etBookAuthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/author"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Издавач"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="14dp">
+                <EditText
+                    android:id="@+id/etBookPublisher"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/publisher"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Град"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="14dp">
+                <EditText
+                    android:id="@+id/etBookCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/type_city"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Контакт"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="14dp">
+                <EditText
+                    android:id="@+id/etBookContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/name_or_phone_forContact"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Состојба Spinner -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Состојба на книгата"
+                android:textSize="11sp"
+                android:textColor="@color/text_secondary"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <Spinner
+                android:id="@+id/spinnerCondition"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="14dp"
+                android:spinnerMode="dropdown"
+                android:layout_marginBottom="20dp" />
+
+            <!-- Preview слика -->
+            <ImageView
+                android:id="@+id/ivBookPreview"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_card"
+                android:visibility="gone" />
+
+            <!-- Камера / Галерија копчиња -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/btnCamera"
+                    style="@style/Widget.BookSwap.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="@string/picture_camera"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btnGallery"
+                    style="@style/Widget.BookSwap.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/from_gallery"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Зачувај -->
+            <Button
+                android:id="@+id/btnSaveBook"
+                style="@style/Widget.BookSwap.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/post_book"
+                android:textSize="15sp"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Откажи -->
+            <Button
+                android:id="@+id/btnCancel"
+                style="@style/Widget.BookSwap.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Откажи"
+                android:textSize="14sp" />
+
         </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/btnSaveBook"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:backgroundTint="#2E7D32"
-            android:text="Објави ја Книгата"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="#757575"
-            android:text="Откажи"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

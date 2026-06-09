@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- ── Основни позадини ── -->
+    <color name="bg_ink">#0D0D0D</color>
+    <color name="bg_navy">#1A1A2E</color>
+    <color name="bg_surface">#22223A</color>
+    <color name="bg_card">#252540</color>
+    <color name="bg_elevated">#2A2A4A</color>
+
+    <!-- ── Акценти ── -->
+    <color name="gold">#C9A84C</color>
+    <color name="gold_dim">#1FC9A84C</color>
+    <color name="teal">#4ECDC4</color>
+    <color name="teal_dim">#1F4ECDC4</color>
+    <color name="danger">#E05C5C</color>
+    <color name="danger_dim">#1FE05C5C</color>
+
+    <!-- ── Текст ── -->
+    <color name="text_primary">#E8D5B7</color>
+    <color name="text_secondary">#7A7A9A</color>
+    <color name="text_hint">#4A4A6A</color>
+
+    <!-- ── Граници ── -->
+    <color name="border">#2A2A4A</color>
+    <color name="border_gold">#3FC9A84C</color>
+
+    <!-- ── Задржи за компатибилност ── -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="nav_icon_color">#FFFFFF</color> ```
 </resources>

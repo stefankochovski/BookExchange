@@ -1,9 +1,91 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.BookExchange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.BookExchange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Основни бои -->
+        <item name="android:windowBackground">@color/bg_ink</item>
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorPrimaryVariant">@color/bg_navy</item>
+        <item name="colorOnPrimary">@color/bg_ink</item>
+        <item name="colorSecondary">@color/teal</item>
+        <item name="colorOnSecondary">@color/bg_ink</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/bg_ink</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/bg_navy</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/bg_navy</item>
+
+        <!-- Стандарден текст -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+
+        <!-- EditText cursor -->
+        <item name="android:textColorHighlight">#33C9A84C</item>
+        <item name="colorControlActivated">@color/gold</item>
+        <item name="colorControlHighlight">@color/gold_dim</item>
+
+        <!-- BottomNavigationView -->
+        <item name="bottomNavigationStyle">@style/Widget.BookSwap.BottomNavigation</item>
     </style>
 
-    <style name="Theme.BookExchange" parent="Base.Theme.BookExchange" />
+    <!-- Bottom Navigation -->
+    <style name="Widget.BookSwap.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/bg_navy</item>
+        <item name="itemIconTint">@color/nav_icon_color</item>
+        <item name="itemTextColor">@color/nav_icon_color</item>
+        <item name="itemRippleColor">@color/gold_dim</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Widget.BookSwap.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/bg_navy</item>
+        <item name="titleTextColor">@color/text_primary</item>
+        <item name="navigationIconTint">@color/text_primary</item>
+    </style>
+
+    <!-- Primary Button (Gold) -->
+    <style name="Widget.BookSwap.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/gold</item>
+        <item name="android:textColor">@color/bg_ink</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="rippleColor">@color/bg_ink</item>
+    </style>
+
+    <!-- Secondary Button (Outline) -->
+    <style name="Widget.BookSwap.Button.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/border</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="rippleColor">@color/gold_dim</item>
+    </style>
+
+    <!-- Danger Button -->
+    <style name="Widget.BookSwap.Button.Danger" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/danger_dim</item>
+        <item name="android:textColor">@color/danger</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="rippleColor">@color/danger_dim</item>
+    </style>
+
+    <!-- FAB -->
+    <style name="Widget.BookSwap.FAB" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/gold</item>
+        <item name="tint">@color/bg_ink</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.BookSwap.FAB</item>
+    </style>
+
+    <style name="ShapeAppearance.BookSwap.FAB" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">14dp</item>
+    </style>
+
 </resources>

@@ -16,7 +16,12 @@ import java.util.*
 class OfferFormActivity : AppCompatActivity() {
 
     private var selectedImageUri: Uri? = null
-    private var capturedBitmap: Bitmap? = null // За чување на слика од камера
+    private var capturedBitmap: Bitmap? = null
+
+    // Глобални променливи за да бидат достапни во сите функции
+    private lateinit var btnSend: Button
+    private var bookWantedId: String? = null
+    private var receiverId: String? = null
 
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance("gs://bookexchange-54489.firebasestorage.app")
@@ -26,29 +31,32 @@ class OfferFormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offer_form)
 
-        val bookWantedId = intent.getStringExtra("bookWantedId")
-        val receiverId = intent.getStringExtra("receiverId")
+        // Преземање на ID-ата веднаш при стартување
+        bookWantedId = intent.getStringExtra("bookWantedId")
+        receiverId = intent.getStringExtra("receiverId")
+
+        // Дебаг логирање (провери го Logcat со филтер "OFFER_DEBUG")
+        android.util.Log.d("OFFER_DEBUG", "Примен receiverId: $receiverId")
 
         val ivBook = findViewById<ImageView>(R.id.ivOfferedBook)
         val btnSelect = findViewById<Button>(R.id.btnSelectImage)
-        val btnCamera = findViewById<Button>(R.id.btnCamera) // Треба да имаш вакво копче во XML
-        val btnSend = findViewById<Button>(R.id.btnSendOffer)
+        val btnCamera = findViewById<Button>(R.id.btnCamera)
+        btnSend = findViewById(R.id.btnSendOffer)
         val btnCancel = findViewById<Button>(R.id.btnCancelOffer)
         val etName = findViewById<EditText>(R.id.etOfferName)
         val etCity = findViewById<EditText>(R.id.etOfferCity)
         val etCondition = findViewById<EditText>(R.id.etOfferCondition)
 
-        // Лаунчери
         val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             selectedImageUri = uri
-            capturedBitmap = null // Ресетирај камера
+            capturedBitmap = null
             ivBook.setImageURI(uri)
         }
 
         val takePicture = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
             if (bitmap != null) {
                 capturedBitmap = bitmap
-                selectedImageUri = null // Ресетирај галерија
+                selectedImageUri = null
                 ivBook.setImageBitmap(bitmap)
             }
         }
@@ -59,68 +67,80 @@ class OfferFormActivity : AppCompatActivity() {
 
         btnSend.setOnClickListener {
             if (auth.currentUser == null) {
-                Toast.makeText(this, "Не си логиран!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.not_logged_in), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (selectedImageUri == null && capturedBitmap == null) {
-                Toast.makeText(this, "Ве молиме одберете слика", Toast.LENGTH_SHORT).show()
+
+            // Дополнителна проверка за сигурност
+            if (receiverId.isNullOrEmpty()) {
+                Toast.makeText(this, getString(R.string.reciever_not_found), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             btnSend.isEnabled = false
-            btnSend.text = "Се испраќа..."
+            btnSend.text = getString(R.string.sending)
 
-            // Конверзија на слика во бајтови
-            val baos = ByteArrayOutputStream()
-            if (capturedBitmap != null) {
-                capturedBitmap?.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+            if (selectedImageUri == null && capturedBitmap == null) {
+                saveOfferToDatabase(null)
             } else {
-                val inputStream = contentResolver.openInputStream(selectedImageUri!!)
-                inputStream?.use { it.copyTo(baos) }
+                val baos = ByteArrayOutputStream()
+                if (capturedBitmap != null) {
+                    capturedBitmap?.compress(Bitmap.CompressFormat.JPEG, 70, baos)
+                } else {
+                    val inputStream = contentResolver.openInputStream(selectedImageUri!!)
+                    inputStream?.use { it.copyTo(baos) }
+                }
+                val bytes = baos.toByteArray()
+
+                val fileName = UUID.randomUUID().toString()
+                val ref = storage.reference.child("offer_images/$fileName")
+
+                ref.putBytes(bytes)
+                    .continueWithTask { task ->
+                        if (!task.isSuccessful) task.exception?.let { throw it }
+                        ref.downloadUrl
+                    }
+                    .addOnSuccessListener { uri ->
+                        saveOfferToDatabase(uri.toString())
+                    }
+                    .addOnFailureListener { e ->
+                        btnSend.isEnabled = true
+                        btnSend.text = getString(R.string.send)
+                        Toast.makeText(this,
+                            getString(R.string.error_attaching, e.message), Toast.LENGTH_LONG).show()
+                    }
             }
-            val bytes = baos.toByteArray()
-
-            val fileName = UUID.randomUUID().toString()
-            val ref = storage.reference.child("offer_images/$fileName")
-
-            ref.putBytes(bytes)
-                .continueWithTask { task ->
-                    if (!task.isSuccessful) task.exception?.let { throw it }
-                    ref.downloadUrl
-                }
-                .addOnSuccessListener { uri ->
-                    val offer = hashMapOf(
-                        "bookWantedId" to bookWantedId,
-                        "senderId" to auth.currentUser?.uid,
-                        "receiverId" to receiverId,
-                        "status" to "pending",
-                        "offeredBookData" to hashMapOf(
-                            "imageUrl" to uri.toString(),
-                            "name" to etName.text.toString(),
-                            "city" to etCity.text.toString(),
-                            "condition" to etCondition.text.toString()
-                        ),
-                        "timestamp" to System.currentTimeMillis()
-                    )
-
-                    db.collection("trades").add(offer)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Успешно!", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                        .addOnFailureListener { e ->
-                            btnSend.isEnabled = true
-                            btnSend.text = "Испрати"
-                            Toast.makeText(this, "Грешка во база: ${e.message}", Toast.LENGTH_LONG).show()
-                        }
-                }
-                .addOnFailureListener { e ->
-                    btnSend.isEnabled = true
-                    btnSend.text = "Испрати"
-                    android.util.Log.e("UPLOAD_ERROR", "Порака: ${e.message}", e)
-                    android.util.Log.e("UPLOAD_ERROR", "Причина: ${e.cause?.message}")
-                    Toast.makeText(this, "Грешка: ${e.message}", Toast.LENGTH_LONG).show()
-                }
         }
+    }
+
+    private fun saveOfferToDatabase(imageUrl: String?) {
+        val etName = findViewById<EditText>(R.id.etOfferName)
+        val etCity = findViewById<EditText>(R.id.etOfferCity)
+        val etCondition = findViewById<EditText>(R.id.etOfferCondition)
+
+        val offer = hashMapOf(
+            "bookWantedId" to bookWantedId,
+            "senderId" to auth.currentUser?.uid,
+            "receiverId" to receiverId, // Сега користиме глобална променлива
+            "status" to "pending",
+            "offeredBookData" to hashMapOf(
+                "imageUrl" to (imageUrl ?: "NO_IMAGE"),
+                "name" to etName.text.toString(),
+                "city" to etCity.text.toString(),
+                "condition" to etCondition.text.toString()
+            ),
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        db.collection("trades").add(offer)
+            .addOnSuccessListener {
+                Toast.makeText(this, getString(R.string.offer_send_success), Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                btnSend.isEnabled = true
+                btnSend.text = getString(R.string.sd)
+                Toast.makeText(this, getString(R.string.error_base, e.message), Toast.LENGTH_LONG).show()
+            }
     }
 }

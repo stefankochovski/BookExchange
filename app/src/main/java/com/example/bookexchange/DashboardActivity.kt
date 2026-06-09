@@ -28,17 +28,20 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var etBookContact: EditText
     private lateinit var btnCancel: Button
 
-    // Променливи во кои ќе ја чуваме состојбата
-    private var selectedCondition: String = "Нова"
+    // ✅ ПОПРАВЕНО: празен string наместо getString() кој не може да се повика овде
+    private var selectedCondition: String = ""
     private val db = FirebaseFirestore.getInstance() // Поврзување со Firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        // ✅ ПОПРАВЕНО: getString() се повикува овде каде Context веќе постои
+        selectedCondition = getString(R.string.nn)
+
         // Овозможи ја стрелката за назад во горната лента
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Додај нова книга"
+        supportActionBar?.title = getString(R.string.new_book_add)
 
         // Иницијализација на компонентите со точните XML ID-а
         etTitle = findViewById(R.id.etBookTitle)
@@ -58,7 +61,7 @@ class DashboardActivity : AppCompatActivity() {
         etBookContact = findViewById(R.id.etBookContact)
 
         // 1. Полнење на паѓачкото мени (Spinner) со состојби
-        val conditions = arrayOf("Нова", "Добро сочувана", "Оштетена")
+        val conditions = arrayOf(getString(R.string.n), getString(R.string.s), getString(R.string.o))
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, conditions)
         spinnerCondition.adapter = adapter
 
@@ -112,18 +115,18 @@ class DashboardActivity : AppCompatActivity() {
 
             // ПРОВЕРКА 1: Дали сите текстуални полиња се пополнети
             if (title.isEmpty() || author.isEmpty() || publisher.isEmpty() || city.isEmpty() || contact.isEmpty()) {
-                Toast.makeText(this, "Пополнете ги сите полиња", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fields_fill), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // ПРОВЕРКА 2: Дали е додадена слика
             if (ivPreview.visibility != View.VISIBLE) {
-                Toast.makeText(this, "Ве молиме додадете и слика од книгата!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.pls_add_pic), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             // Ако поминаа двете проверки, тогаш јавуваме дека се зачувува
-            Toast.makeText(this, "Се обидувам да зачувам...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.trying_save), Toast.LENGTH_SHORT).show()
 
             // Креирање на објект (мапа) со податоците за книгата
             val bookData = hashMapOf(
@@ -131,7 +134,7 @@ class DashboardActivity : AppCompatActivity() {
                 "author" to author,
                 "publisher" to publisher,
                 "condition" to selectedCondition,
-                "ownerId" to FirebaseAuth.getInstance().currentUser?.uid, // ДОДАЈ ГО ОВА
+                "ownerId" to FirebaseAuth.getInstance().currentUser?.uid,
                 "city" to city,
                 "contact" to contact,
                 "timestamp" to com.google.firebase.Timestamp.now()
@@ -141,7 +144,7 @@ class DashboardActivity : AppCompatActivity() {
             db.collection("books")
                 .add(bookData)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "УСПЕХ: Книгата е во базата!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.bood_added), Toast.LENGTH_LONG).show()
 
                     // Чистење на формата по успешно зачувување
                     etTitle.text.clear()
@@ -153,7 +156,8 @@ class DashboardActivity : AppCompatActivity() {
                     ivPreview.visibility = View.GONE // Ја криеме сликата за следното внесување
                 }
                 .addOnFailureListener { ex ->
-                    Toast.makeText(this, "ФАЛИНКА: ${ex.localizedMessage}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,
+                        getString(R.string.falinka, ex.localizedMessage), Toast.LENGTH_LONG).show()
                 }
         }
 

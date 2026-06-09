@@ -1,96 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/activity_main.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:background="@color/bg_ink">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+    <!-- ── HERO ── -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
         android:gravity="center"
-        android:text="@string/login_title"
-        android:textColor="#333333"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:background="@color/bg_navy"
+        android:paddingBottom="32dp">
 
-    <!-- Полиња за мејл и лозинка -->
-    <EditText
-        android:id="@+id/etEmail"
+        <!-- Иконка со golden border -->
+        <LinearLayout
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:background="@drawable/bg_app_icon"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📚"
+                android:textSize="32sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Копче за јазик -->
+        <Button
+            android:id="@+id/btnLanguage"
+            style="@style/Widget.BookSwap.Button.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:text="EN / MK"
+            android:textSize="11sp"
+            android:paddingHorizontal="14dp" />
+
+    </LinearLayout>
+
+    <!-- ── ФОРМА ── -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@android:drawable/editbox_background_normal"
-        android:hint="@string/email_hint"
-        android:inputType="textEmailAddress"
-        android:padding="12dp" />
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/bg_ink"
+        android:fillViewport="true">
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:background="@android:drawable/editbox_background_normal"
-        android:hint="@string/password_hint"
-        android:inputType="textPassword"
-        android:padding="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-    <!-- Копче за стандардна најава -->
-    <Button
-        android:id="@+id/btnLoginEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#4CAF50"
-        android:text="@string/btn_login"
-        android:textColor="@android:color/white" />
+            <!-- Email field -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="10dp">
 
-    <!-- Копче за регистрација -->
-    <Button
-        android:id="@+id/btnRegisterEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:backgroundTint="#9E9E9E"
-        android:text="@string/btn_register"
-        android:textColor="@android:color/white" />
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:text="✉"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="или" />
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
-    <!-- Google Login -->
-    <Button
-        android:id="@+id/btnLoginGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#EA4335"
-        android:text="@string/login_google"
-        android:textColor="@android:color/white" />
+            <!-- Password field -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_input_focused"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="14dp"
+                android:layout_marginBottom="20dp">
 
-    <!-- Facebook Login -->
-    <Button
-        android:id="@+id/btnLoginFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#3B5998"
-        android:text="@string/login_facebook"
-        android:textColor="@android:color/white" />
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:text="🔒"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:gravity="center"
+                    android:layout_marginEnd="10dp" />
 
-    <!-- Anonymous Login -->
-    <Button
-        android:id="@+id/btnAnonymous"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#607D8B"
-        android:text="@string/login_anonymous"
-        android:textColor="@android:color/white" />
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Login копче -->
+            <Button
+                android:id="@+id/btnLoginEmail"
+                style="@style/Widget.BookSwap.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/btn_login"
+                android:textSize="15sp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Register link -->
+            <TextView
+                android:id="@+id/tvRegisterLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="@string/ifNoProfile_signUp"
+                android:textSize="13sp"
+                android:textColor="@color/gold" />
+
+            <!-- Разделник -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/border" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="или продолжи со"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:paddingHorizontal="12dp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="@color/border" />
+            </LinearLayout>
+
+            <!-- Google -->
+            <Button
+                android:id="@+id/btnLoginGoogle"
+                style="@style/Widget.BookSwap.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/login_google"
+                android:textSize="13sp" />
+
+            <!-- Facebook -->
+            <Button
+                android:id="@+id/btnLoginFacebook"
+                style="@style/Widget.BookSwap.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/login_facebook"
+                android:textSize="13sp" />
+
+            <!-- Anonymous -->
+            <Button
+                android:id="@+id/btnAnonymous"
+                style="@style/Widget.BookSwap.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/login_anonymous"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
